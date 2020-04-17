@@ -15,3 +15,8 @@ function gerarMatriz(linhas, colunas){
 function gerarInteiroAleatorio(min, max){
     return Math.trunc(Math.random() * (max - min) + min);
 }
+
+module.exports = {
+    gerarMatriz,
+    gerarInteiroAleatorio
+}
