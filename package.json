@@ -4,7 +4,8 @@
   "description": "Site com diferentes jogos, individuais e em grupo",
   "main": "index.js",
   "scripts": {
-    "test": "tape tests/**/*.js | tap-spec"
+    "test": "tape tests/**/*.js | tap-spec",
+    "build": "webpack --config ./webpack/webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,11 @@
   "homepage": "https://github.com/mateus9785/GoodGame#readme",
   "devDependencies": {
     "tap-spec": "^5.0.0",
-    "tape": "^4.13.2"
+    "tape": "^4.13.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "path": "^0.12.7"
   }
 }

@@ -1,3 +1,8 @@
+import './matematica.js';
+import Posicao from './posicao.js';
+import Cobra from './cobra.js';
+import Comida from './comida.js';
+
 function Campo(_linha, _coluna){
     this.Linhas = _linha;
     this.Colunas = _coluna;

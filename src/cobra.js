@@ -1,3 +1,6 @@
+import {Posicao} from './posicao.js';
+import './direcaoSentido.js';
+
 function Cobra(_linha, _coluna) {
     this.DirecaoHorizontal = true;
     this.Sentido = SentidoPadrao.Right;

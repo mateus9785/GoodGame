@@ -2,7 +2,7 @@ var posicaoVazia = null,
     posicaoOcupadaCobra = 1,
     posicaoOcupadaComida = 2;
 
-function Posicao(_linha, _coluna){
+export function Posicao(_linha, _coluna){
     this.Linha = _linha;
     this.Coluna = _coluna;
 
