@@ -1,0 +1,26 @@
+{
+  "name": "goodgame",
+  "version": "1.0.0",
+  "description": "Site com diferentes jogos, individuais e em grupo",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests/**/*.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mateus9785/GoodGame.git"
+  },
+  "keywords": [
+    "snake"
+  ],
+  "author": "Mateus Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mateus9785/GoodGame/issues"
+  },
+  "homepage": "https://github.com/mateus9785/GoodGame#readme",
+  "devDependencies": {
+    "tap-spec": "^5.0.0",
+    "tape": "^4.13.2"
+  }
+}
