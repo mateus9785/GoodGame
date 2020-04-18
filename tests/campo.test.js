@@ -18,14 +18,17 @@ test('Verificar posicoes dentro do campo', (t) => {
     var posicao = campoNovo.GerarPosicaoAleatoria();
     t.assert(campoNovo.Matriz.some(x => x == posicao), "Verificou que posicao aleatoria pertence ao campo");
 
-    campoNovo.Cobra.Posicoes[0] = campoNovo.Matriz[0];
+    var right = 39;
+    campoNovo.Cobra.Sentido = right;
+    campoNovo.Cobra.Posicoes[0] = campoNovo.Matriz[1];
     var proximaPosicaoGerada = campoNovo.ProximaPosicaoCobra();
-    t.assert(proximaPosicaoGerada.Linha == 0 && proximaPosicaoGerada.Coluna == 1, "Verificou se a proxima posicao para a direita estava certa ");
+    t.assert(proximaPosicaoGerada.Linha == 0 && proximaPosicaoGerada.Coluna == 2, "Verificou se a proxima posicao para a direita estava certa ");
 
-    var left = 37;
-    campoNovo.Cobra.Sentido = left;
+    var up = 38;
+    campoNovo.Cobra.Sentido = up;
+    campoNovo.Cobra.DirecaoHorizontal = false;
     proximaPosicaoGerada = campoNovo.ProximaPosicaoCobra();
-    t.assert(proximaPosicaoGerada.Linha == 0 && proximaPosicaoGerada.Coluna == 3, "Verificou se a proxima posicao para a esquerda na borda estava certa");
+    t.assert(proximaPosicaoGerada.Linha == 3 && proximaPosicaoGerada.Coluna == 1, "Verificou se a proxima posicao para a esquerda na borda estava certa");
 
     t.end();
 })

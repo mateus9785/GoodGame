@@ -15,11 +15,16 @@ test('Verificar instancia Cobra', (t) => {
 
 test('Verificar direcao Cobra', (t) => {
     var down = 40,
+        up = 38,
         event = { keyCode: down },
         novaCobra = new Cobra(posicao);
 
     novaCobra.MudarDirecao(event);
-    t.assert(novaCobra.Sentido == down && !novaCobra.DirecaoHorizontal, "Verificou direcao e sentido certo apos mudar de direcao"); 
+    t.assert(novaCobra.Sentido == down && !novaCobra.DirecaoHorizontal, "Verificou direcao e sentido certo apos mudar de direcao");
+
+    event.keyCode = up;
+    novaCobra.MudarDirecao(event);
+    t.assert(!(novaCobra.Sentido == up), "Verificou que sentido nao muda se nao mudou de direcao");    
     t.end();
 })
 
@@ -32,12 +37,12 @@ test('Verificar movimentacao de Cobra', (t) => {
 
     var posicoesOcupadas = novaCobra.Posicoes.length;
     novaCobra.OcuparNovaPosicao(proximaPosicao);
-    t.assert(posicoesOcupadas + 1 == novaCobra.Posicoes.length, "Verificou que cobra ocupou nova posicao");
+    t.assert(posicoesOcupadas + 1 == novaCobra.Posicoes.length && proximaPosicao == novaCobra.Posicoes[0], "Verificou que cobra ocupou nova posicao");
     t.assert(proximaPosicao.VerificarPosicaoOcupadaPelaCobra(), "Verificou que a posicao foi ocupada apos se mover");  
 
     posicoesOcupadas = novaCobra.Posicoes.length;
     novaCobra.MoverCorpo(posicaoSeraOcupada);
-    t.assert(novaCobra.Posicoes.length == posicoesOcupadas, "Verificou que continua ocupando a mesma quantidade de posicoes apos se mover");
+    t.assert(novaCobra.Posicoes.length == posicoesOcupadas  && posicaoSeraOcupada == novaCobra.Posicoes[0], "Verificou que continua ocupando a mesma quantidade de posicoes apos se mover");
     t.assert(!posicao.VerificarPosicaoOcupadaPelaCobra(), "Verificou que a ultima posicao foi desocupada apos se mover");
     t.assert(posicaoSeraOcupada.VerificarPosicaoOcupadaPelaCobra(), "Verificou que a posicao foi ocupada apos se mover");
 

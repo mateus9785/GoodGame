@@ -11,7 +11,7 @@ class Cobra {
     constructor(posicao){
         this.DirecaoHorizontal = true;
         this.Sentido = SentidoPadrao.Right;
-        this.Tamanho = 1;
+        this.Tamanho = 3;
         this.Posicoes = [];
         this.OcuparNovaPosicao(posicao);
     }
@@ -39,7 +39,7 @@ class Cobra {
 
     MudarDirecao(event){
         var botaoApertado = event.keyCode;
-        if(!VerificarSentidoValido(botaoApertado) || VerificarDirecaoIgual(botaoApertado, this.Sentido))
+        if(!VerificarSentidoValido(botaoApertado) || VerificarDirecaoIgual(botaoApertado, this.DirecaoHorizontal))
             return;
 
         this.DirecaoHorizontal = !this.DirecaoHorizontal;

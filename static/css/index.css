@@ -1,4 +1,6 @@
 #divCampoJogo{
     background-color: black;
     margin: auto;
+    width: 700px;
+    height: 400px;
 }
