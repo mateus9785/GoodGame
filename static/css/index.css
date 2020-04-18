@@ -1,20 +1,4 @@
-body{
-    display: flex;
-    justify-content: center;
-}
-
-#grid-campo {
-    display: grid;
-    grid-template-columns: auto auto auto auto auto;
-    background-image: url("./../image/grama.jpg");
-    width: 700px;
-    height: 400px;
-}
-
-.divCobra{
-    background-color: green;
-}
-
-.divComida{
-    background-color: gold;
+#divCampoJogo{
+    background-color: black;
+    margin: auto;
 }

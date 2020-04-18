@@ -1,54 +1,99 @@
-import './matematica.js';
-import Posicao from './posicao.js';
-import Cobra from './cobra.js';
-import Comida from './comida.js';
+const { GerarVetorPosicoes, GerarInteiroAleatorio } = require("./matematica");
+const  { Cobra } = require("./cobra");
+const  { Comida } = require("./comida");
 
-function Campo(_linha, _coluna){
-    this.Linhas = _linha;
-    this.Colunas = _coluna;
-    this.Cobra = null;
-    this.Matriz = gerarMatriz(this.Linhas, this.Colunas);
-    this.Comida = null;
+const SentidoPadrao = {
+    Left : 37,
+    Up: 38,
+    Right: 39,
+    Down: 40
+}
 
-    this.GerarPosicaoAleatorio = function(){
-        var linha = gerarInteiroAleatorio(0, this.Linhas);
-        var coluna = gerarInteiroAleatorio(0, this.Colunas);
-        return new Posicao(linha, coluna);
+class Campo{
+    constructor(linhas, colunas){
+        this.Linhas = linhas;
+        this.Colunas = colunas;
+        this.Matriz = GerarVetorPosicoes(this.Linhas, this.Colunas);
+        this.Cobra = null;
+        this.Comida = null;
+        this.TempoRecargaComida = 5;
+    }
+
+    GerarPosicaoAleatoria(){
+        var linha = GerarInteiroAleatorio(0, this.Linhas);
+        var coluna = GerarInteiroAleatorio(0, this.Colunas);
+        return this.Matriz.find(x => x.Linha == linha && x.Coluna == coluna)
     };
 
-    this.CobraSaiuLimiteCampo = function(){
-        if(this.Cobra.Linha > this.Linhas - 1)
-            this.Cobra.Linha = 0;
-        if(this.Cobra.Linha < 0)
-            this.Cobra.Linha = this.Linhas - 1;
-        if(this.Cobra.Coluna > this.Colunas - 1)
-            this.Cobra.Coluna = 0;
-        if(this.Cobra.Coluna < 0)
-            this.Cobra.Coluna = this.Colunas - 1;
+    GerarCobraCampo(){
+        var posicao = this.GerarPosicaoAleatoria();
+        this.Cobra = new Cobra(posicao);
     };
 
-    this.GerarCobraCampo = function(){
-        var posicao = this.GerarPosicaoAleatorio();
-        this.Cobra = new Cobra(posicao.Linha, posicao.Coluna);
-        this.AtualizarMatriz();
-    };
-
-    this.GerarComidaCampo = function(){
+    GerarComidaCampo(){
         var posicao;
         do{
-            posicao = this.GerarPosicaoAleatorio();
+            posicao = this.GerarPosicaoAleatoria();
         }
-        while(posicao.PosicaoOcupadaPelaCobra(this.Matriz))
+        while(posicao.VerificarPosicaoOcupadaPelaCobra())
 
-        this.Comida = new Comida(posicao.Linha, posicao.Coluna);
-
-        this.AtualizarMatriz();
+        this.Comida = new Comida(posicao);
     };
 
-    this.AtualizarMatriz = function(){
-        var posicaoCobra = this.Cobra.PosicaoInicioCobra;
-        var posicaoComida = this.Comida.Posicao;
-        this.Matriz[posicaoCobra.Linha][posicaoCobra.Coluna] = posicaoOcupadaCobra;
-        this.Matriz[posicaoComida.Linha][posicaoComida.Coluna] = posicaoOcupadaComida;
-    };
+    ExisteComidaCampo(){
+        return this.Comida != null;
+    }
+
+    DiminuirTempoRecargaComida(){
+        if(!this.ExisteComidaCampo()){
+            this.TempoRecargaComida--;
+
+            if(!this.TempoRecargaComida){
+                this.GerarComidaCampo();
+            }
+        }
+    }
+
+    ProximaPosicaoCobra(){
+        var posicaoCabeca = this.Cobra.Posicoes[0];
+        var sentido = this.Cobra.Sentido;
+        var linha = posicaoCabeca.Linha;
+        var coluna = posicaoCabeca.Coluna;
+        switch (sentido) {
+            case SentidoPadrao.Left:
+                coluna--;
+                break;
+            case SentidoPadrao.Right:
+                coluna++;
+                break;
+            case SentidoPadrao.Up:
+                linha--;
+                break;
+            case SentidoPadrao.Down:
+                linha++;
+                break;
+        }
+
+        if(linha > this.Linhas - 1 || linha < 0 || coluna > this.Colunas - 1 ||  coluna < 0)
+            if(linha > this.Linhas - 1)
+                linha = 0;
+            else if(linha < 0)
+                linha = this.Linhas - 1;
+            else if(coluna > this.Colunas - 1)
+                coluna = 0;
+            else
+                coluna = this.Colunas - 1;
+
+        return this.Matriz.find(x => x.Linha == linha && x.Coluna == coluna);
+    }
+
+    CobraComeuComida(){
+        this.Comida.Posicao.DesocuparPosicao();
+        this.Comida = null;
+        this.TempoRecargaComida = 5;
+    }
+}
+
+module.exports = {
+    Campo
 }
