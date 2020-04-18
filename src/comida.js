@@ -1,5 +1,10 @@
-import { Posicao } from './posicao.js';
+class Comida{
+    constructor(posicao){
+        this.Posicao = posicao;
+        posicao.ComidaOcupouPosicao();
+    }
+}
 
-function Comida(_linha, _coluna){
-    this.Posicao = new Posicao(_linha, _coluna);
+module.exports = {
+    Comida
 }

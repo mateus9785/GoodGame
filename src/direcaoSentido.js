@@ -7,17 +7,17 @@ const SentidoPadrao = {
 
 const SentidoHorizontal = [SentidoPadrao.Left, SentidoPadrao.Right];
 
-function verificarDirecaoIgual(sentidoEscolhido, direcaoHorizontalCobra){
+function VerificarDirecaoIgual(sentidoEscolhido, direcaoHorizontalCobra){
     var direcaoHorizontalEscolhida = SentidoHorizontal.indexOf(sentidoEscolhido) != -1;
     return direcaoHorizontalEscolhida == direcaoHorizontalCobra;
 }
 
-function sentidoValido(botaoApertado){
+function VerificarSentidoValido(botaoApertado){
     var sentidosPossiveis = Object.values(SentidoPadrao);
     return sentidosPossiveis.indexOf(botaoApertado) != -1;
 }
 
 module.exports = {
-    verificarDirecaoIgual,
-    sentidoValido
+    VerificarDirecaoIgual,
+    VerificarSentidoValido
 }

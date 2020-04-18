@@ -1,18 +1,37 @@
-var posicaoVazia = null,
-    posicaoOcupadaCobra = 1,
-    posicaoOcupadaComida = 2;
+const PosicoesTipos = {
+    Vazia: null,
+    OcupadaCobra: true,
+    OcupadaComida: false
+}
 
-export function Posicao(_linha, _coluna){
-    this.Linha = _linha;
-    this.Coluna = _coluna;
+class Posicao{
+    constructor(linha, coluna) {
+        this.Linha = linha;
+        this.Coluna = coluna;
+        this.TipoPosicao = PosicoesTipos.Vazia;
+    }
 
-    this.PosicaoOcupadaPelaCobra = function(matriz){
-        var valorPosicao = matriz[this.Linha][this.Coluna];
-        return valorPosicao == posicaoOcupadaCobra;
+    VerificarPosicaoOcupadaPelaCobra(){
+        return PosicoesTipos.OcupadaCobra == this.TipoPosicao;
     };
 
-    this.PosicaoOcupadaPelaComida = function(matriz){
-        var valorPosicao = matriz[this.Linha][this.Coluna];
-        return valorPosicao == posicaoOcupadaComida;
+    VerificarPosicaoOcupadaPelaComida(){
+        return PosicoesTipos.OcupadaComida == this.TipoPosicao;
     };
+
+    CobraOcupouPosicao(){
+        this.TipoPosicao = PosicoesTipos.OcupadaCobra;
+    };
+
+    ComidaOcupouPosicao(){
+        this.TipoPosicao = PosicoesTipos.OcupadaComida;
+    };
+
+    DesocuparPosicao(){
+        this.TipoPosicao = PosicoesTipos.Vazia;
+    }
+}
+
+module.exports = {
+    Posicao
 }

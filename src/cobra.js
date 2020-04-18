@@ -1,45 +1,52 @@
-import {Posicao} from './posicao.js';
-import './direcaoSentido.js';
+const { VerificarSentidoValido, VerificarDirecaoIgual} = require("./direcaoSentido");
 
-function Cobra(_linha, _coluna) {
-    this.DirecaoHorizontal = true;
-    this.Sentido = SentidoPadrao.Right;
-    this.Velocidade = 10;
-    this.PosicaoInicioCobra = new Posicao(_linha, _coluna);
-    this.Tamanho = 1;
+const SentidoPadrao = {
+    Left : 37,
+    Up: 38,
+    Right: 39,
+    Down: 40
+}
 
-    this.Mover = function () {
-        switch (this.Sentido) {
-            case SentidoPadrao.Left:
-                this.PosicaoInicioCobra.Linha -= this.velocidade;
-                break;
-            case SentidoPadrao.Right:
-                this.PosicaoInicioCobra.Linha += this.velocidade;
-                break;
-            case SentidoPadrao.Up:
-                this.PosicaoInicioCobra.Coluna -= this.velocidade;
-                break;
-            case SentidoPadrao.Down:
-                this.PosicaoInicioCobra.Coluna += this.velocidade;
-                break;
+class Cobra {
+    constructor(posicao){
+        this.DirecaoHorizontal = true;
+        this.Sentido = SentidoPadrao.Right;
+        this.Tamanho = 1;
+        this.Posicoes = [];
+        this.OcuparNovaPosicao(posicao);
+    }
+
+    MoverCorpo(novaPosicao){
+        this.OcuparNovaPosicao(novaPosicao);
+        this.DesocuparUltimaPosicao();
+    };
+
+    OcuparNovaPosicao(posicao){
+        posicao.CobraOcupouPosicao();
+        this.Posicoes.unshift(posicao);
+    }
+
+    DesocuparUltimaPosicao(){
+        if(this.Tamanho < this.Posicoes.length){
+            var posicaoLiberada = this.Posicoes.pop();
+            posicaoLiberada.DesocuparPosicao();
         }
+    }
 
-    };
-
-    this.Acelerar = function (valor) {
-        this.Velocidade+= valor;
-    };
-
-    this.Crescer = function (){
+    Crescer(){
         this.Tamanho++;
     };
 
-    this.MudarDirecao = function(event){
+    MudarDirecao(event){
         var botaoApertado = event.keyCode;
-        if(!sentidoValido(botaoApertado) || verificarDirecaoIgual(botaoApertado, this.Sentido))
+        if(!VerificarSentidoValido(botaoApertado) || VerificarDirecaoIgual(botaoApertado, this.Sentido))
             return;
 
         this.DirecaoHorizontal = !this.DirecaoHorizontal;
         this.Sentido = botaoApertado;
     };
+}
+
+module.exports = {
+    Cobra
 }
